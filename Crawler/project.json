@@ -52,6 +52,6 @@
   },
 
   "tooling": {
-    "defaultNamespace": "Service1"
+    "defaultNamespace": "Crawler"
   }
 }

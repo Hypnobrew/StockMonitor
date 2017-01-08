@@ -1,6 +1,6 @@
 using Nancy;
 
-namespace Service1
+namespace Crawler
 {
     public class HomeModule : NancyModule
     {
