@@ -6,7 +6,7 @@
     "tasks": [
         {
             "taskName": "build",
-            "args": ["Web","Crawler"],
+            "args": ["Infrastructure", "Web","Crawler"],
             "isBuildCommand": true,
             "showOutput": "silent",
             "problemMatcher": "$msCompile"

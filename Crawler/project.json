@@ -12,7 +12,9 @@
     "Microsoft.Extensions.Configuration.Json": "1.1.0",
     "Microsoft.Extensions.Configuration.CommandLine": "1.1.0",
     "Microsoft.AspNetCore.Owin": "1.0.0",
-    "Nancy": "2.0.0-clinteastwood"
+    "Nancy": "2.0.0-clinteastwood",
+    "Microsoft.AspNetCore.Mvc": "1.1.0",
+    "protobuf-net": "2.1.0"
   },
 
   "tools": {
@@ -24,7 +26,12 @@
       "imports": [
         "dotnet5.6",
         "portable-net45+win8"
-      ]
+      ],
+      "dependencies": {
+        "Infrastructure": {
+          "target": "project"
+        }
+      }
     }
   },
 
