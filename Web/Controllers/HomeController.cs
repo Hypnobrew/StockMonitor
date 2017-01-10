@@ -1,7 +1,6 @@
 using System;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using Infrastructure;
+using System.Threading.Tasks;
 using Infrastructure.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,22 +9,19 @@ namespace Web.Controllers
     public class HomeController : Controller
     {
         [HttpGet]
-        public string Index()
+        public async Task<string> Index()
         {
             var client = new System.Net.Http.HttpClient { BaseAddress = new Uri("http://localhost:5002") };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-protobuf"));
 
-            var response = client.GetAsync("api/Home").Result;
-             
+            var response = await client.GetAsync("api/home");
             if (response.IsSuccessStatusCode)
             {                
-                var model = response.Content.ReadAsStringAsync().Result;
-
-                var formatter = new ProtobufInputFormatter();
-                formatter
-                
-                //var model = response.Content.ReadAsAsync<ProtobufModelDto>(new[] { new ProtobufInputFormatter()}).Result;
-                //return $"{model.Name}, {model.StringValue}, {model.Id}";
+                using(var stream = await response.Content.ReadAsStreamAsync())
+                {
+                    var model = ProtoBuf.Serializer.Deserialize<ProtobufModelDto>(stream);
+                    return $"{model.Name}, {model.StringValue}, {model.Id}";
+                }
             }
 
             return "Failed";

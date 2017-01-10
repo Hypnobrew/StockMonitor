@@ -10,7 +10,10 @@ namespace Crawler.Controllers
 
         public ProtobufModelDto Get()
         {
-            return new ProtobufModelDto() { Id = 1, Name = "HelloWorld", StringValue = "My first MVC 6 Protobuf service" };
+            return new ProtobufModelDto() { 
+                Id = 1, 
+                Name = "Protobuf test", 
+                StringValue = "PoC test message for Protobuf on .Net Core" };
         }        
     }
 }
