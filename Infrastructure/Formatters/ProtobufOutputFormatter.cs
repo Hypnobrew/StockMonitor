@@ -20,8 +20,9 @@ namespace Infrastructure
         public ProtobufOutputFormatter()
         {
             ContentType = "application/x-protobuf";
-            SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse("application/x-protobuf"));
-            //SupportedEncodings.Add(Encoding.GetEncoding("utf-8"));
+            var mediaTypeHeader = MediaTypeHeaderValue.Parse(ContentType);
+            mediaTypeHeader.Encoding = System.Text.Encoding.UTF8;
+            SupportedMediaTypes.Add(mediaTypeHeader);
         }
  
         private static RuntimeTypeModel CreateTypeModel()
