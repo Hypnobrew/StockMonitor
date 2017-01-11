@@ -12,7 +12,8 @@
     "Microsoft.Extensions.Configuration.Json": "1.1.0",
     "Microsoft.Extensions.Configuration.CommandLine": "1.1.0",
     "Microsoft.AspNetCore.Mvc": "1.1.0",
-    "protobuf-net": "2.1.0"
+    "protobuf-net": "2.1.0",
+    "System.Net.Http": "4.3.0"
   },
 
   "tools": {

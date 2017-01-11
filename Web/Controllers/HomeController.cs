@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Infrastructure.Model;
@@ -12,26 +13,25 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<string> Index()
         {
-            var client = new System.Net.Http.HttpClient { BaseAddress = new Uri("http://localhost:5002") };
+            var client = new HttpClient { BaseAddress = new Uri("http://localhost:5002") };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-protobuf"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             var response = await client.GetAsync("api/home");
             if (response.IsSuccessStatusCode)
-            {                
-                using(var stream = await response.Content.ReadAsStreamAsync())
-                {
-                    ProtobufModelDto model = null;
-                    if (response.Content.Headers.ContentType.MediaType == "application/x-protobuf")
+            {   
+                if (response.Content.Headers.ContentType.MediaType == "application/x-protobuf")
+                {             
+                    using(var stream = await response.Content.ReadAsStreamAsync())
                     {
-                        model = ProtoBuf.Serializer.Deserialize<ProtobufModelDto>(stream);
-                        return $"{model.Name}, {model.StringValue}, {model.Id}";
+                        var protoBufModel = ProtoBuf.Serializer.Deserialize<ProtobufModelDto>(stream);
+                        return $"{protoBufModel.Name}, {protoBufModel.StringValue}, {protoBufModel.Id}";
                     }
-
-                    var content = await response.Content.ReadAsStringAsync();
-                    model = JsonConvert.DeserializeObject<ProtobufModelDto>(content);
-                    return $"{model.Name}, {model.StringValue}, {model.Id}";  
                 }
+
+                var content = await response.Content.ReadAsStringAsync();
+                var jsonModel = JsonConvert.DeserializeObject<ProtobufModelDto>(content);
+                return $"{jsonModel.Name}, {jsonModel.StringValue}, {jsonModel.Id}";
             }
 
             return "Failed";
